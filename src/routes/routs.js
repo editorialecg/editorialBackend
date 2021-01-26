@@ -17,7 +17,7 @@ const multipartMiddleware = multipart({
 
 
 var corsOptions = {
-    origin: 'http://localhost:4200',
+    origin: ['http://localhost:4200','https://editorialebook.herokuapp.com'],
 }
 
 // Metodos GET
