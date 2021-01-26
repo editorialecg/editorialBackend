@@ -19,10 +19,7 @@ const ebookFront = mongoose.Schema({
         type: String,
         require: true
     },
-    size:{
-        type: Number,
-        require: true
-    },
+    
 }, opts );
 
 module.exports = mongoose.model('ebookFront',ebookFront);

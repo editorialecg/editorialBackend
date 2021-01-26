@@ -157,10 +157,10 @@ async function getOneUser(req,res){
 async function uploadEbook(req,res){
 
 
-  const name = req.files.uploads[0].originalFilename
-  const type = req.files.uploads[0].type
-  const path = req.files.uploads[0].path
-  const size = req.files.uploads[0].size
+  const name = req.body.name
+  const type = req.body.type
+  const path = req.body.path
+  
 
   
   /* if(req.files){
@@ -177,7 +177,6 @@ async function uploadEbook(req,res){
     name: name,
     type: type,
     path: path,
-    size: size
   }, (err, ebook) => {
     if(err) throw err;
     
