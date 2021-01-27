@@ -168,10 +168,17 @@ async function uploadEbook(req,res){
     type: type,
     path: path,
     btnPayPal: btnPayPal
-  }, (err, ebook) => {
-    if(err) throw err;
+  }, (err, ebookFront) => {
+    if(err){
+      res.status(404).json({err: err})
+    }
     
-    res.json({succes: true, ebook: ebook, msg: 'Upload complete'});
+    ebook.find({},(err,ebooks) =>{
+      if(err){
+        res.status(404).json({err: err})
+      }
+      res.json({succes: true,ebooks, msg: 'Upload complete'});
+    })
 
   })
 
