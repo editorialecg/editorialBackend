@@ -163,16 +163,6 @@ async function uploadEbook(req,res){
   const btnPayPal = req.body.btnPayPal
 
   
-  /* if(req.files){
-    console.log( req.files )
-    console.log(
-      name,
-      type,
-      path,
-      size
-    );
-  }  */
-  
   ebook.create({
     name: name,
     type: type,
@@ -181,7 +171,7 @@ async function uploadEbook(req,res){
   }, (err, ebook) => {
     if(err) throw err;
     
-    res.json({succes: true, ebook, msg: 'Upload complete'});
+    res.json({succes: true, ebook: ebook, msg: 'Upload complete'});
 
   })
 
