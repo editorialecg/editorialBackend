@@ -186,7 +186,7 @@ async function getEbook(req,res){
       if(err){
         res.status(404).json({err: err});
       }else{ 
-       res.status(200).json({ebook: ebook});
+       res.status(200).json({ebook});
       }
   })
 
