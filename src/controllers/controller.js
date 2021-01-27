@@ -162,23 +162,17 @@ async function uploadEbook(req,res){
   const path = req.body.path
   const btnPayPal = req.body.btnPayPal
 
+
   
   ebook.create({
     name: name,
     type: type,
     path: path,
     btnPayPal: btnPayPal
-  }, (err, ebookFront) => {
-    if(err){
-      res.status(404).json({err: err})
-    }
+  }, (err, ebook) => {
+    if(err) throw err;
     
-    ebook.find({},(err,ebooks) =>{
-      if(err){
-        res.status(404).json({err: err})
-      }
-      res.json({succes: true,ebooks, msg: 'Upload complete'});
-    })
+    res.json({succes: true, ebook, msg: 'Upload complete'});
 
   })
 
@@ -192,7 +186,7 @@ async function getEbook(req,res){
       if(err){
         res.status(404).json({err: err});
       }else{ 
-       res.json({ebook});
+       res.status(200).json({ebook: ebook});
       }
   })
 
