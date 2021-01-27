@@ -19,6 +19,10 @@ const ebookFront = mongoose.Schema({
         type: String,
         require: true
     },
+    btnPayPal:{
+        type: String,
+        require: true
+    }
     
 }, opts );
 

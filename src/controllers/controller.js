@@ -4,7 +4,7 @@ const fs = require('fs');
 
 
 const User = require('../models/model');
-const ebook = require('../models/ebookModel');
+const ebook = require('../models/ebookfrontModel');
 
 
 
@@ -160,7 +160,7 @@ async function uploadEbook(req,res){
   const name = req.body.name
   const type = req.body.type
   const path = req.body.path
-  
+  const btnPayPal = req.body.btnPayPal
 
   
   /* if(req.files){
@@ -177,6 +177,7 @@ async function uploadEbook(req,res){
     name: name,
     type: type,
     path: path,
+    btnPayPal: btnPayPal
   }, (err, ebook) => {
     if(err) throw err;
     
