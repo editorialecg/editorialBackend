@@ -22,7 +22,7 @@ async function loginUser(req, res) {
       
     }
     if (bcrypt.compareSync(password, user.password)) {
-        const secretKey = 'yourSecretKey';
+        const secretKey = procees.env.JWT
         const expireIn = "1h";
         const token = jwt.sign({id: user.id }, secretKey, {
         expiresIn: expireIn
