@@ -29,6 +29,10 @@ router.get('/api/:username', (req,res) => {
     controller.getOneUser(req,res);
 });
 
+router.get('/api/getebooks', cors(corsOptions), (req,res) => {
+    controller.getEbook(req,res);
+});
+
 //Metodos POST
 router.post('/api/saveuser',cors(corsOptions), (req,res) =>{
     controller.saveUser(req,res);
@@ -42,8 +46,6 @@ router.post('/api/ebooks', multipartMiddleware , cors(corsOptions), (req,res) =>
     controller.uploadEbook(req,res);
 });
 
-router.get('/api/getebooks', cors(corsOptions), (req,res) => {
-    controller.getEbook(req,res);
-});
+
 
 module.exports = router;
