@@ -186,7 +186,13 @@ async function getEbook(req,res){
       if(err){
         res.status(404).json({err: err});
       }else{ 
-       res.status(200).json({ebook});
+        dataEbookFront = {
+          name: ebook.name,
+          path: ebook.path,
+          type: ebook.type,
+          btnPayPal: ebook.btnPayPal
+        }
+       res.status(200).json({dataEbookFront});
       }
   })
 
