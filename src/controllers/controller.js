@@ -192,7 +192,7 @@ async function getEbook(req,res){
           type: ebook.type,
           btnPayPal: ebook.btnPayPal
         }
-       res.status(200).json({ebook: dataEbookFront,ebook});
+       res.status(200).json({dataEbookFront,ebook});
       }
   })
 
