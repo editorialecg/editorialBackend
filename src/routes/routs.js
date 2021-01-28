@@ -25,9 +25,9 @@ router.get('/api/users', (req,res) => {
     controller.getAll(req, res);
 });
 
-/* router.get('/api/:username', (req,res) => {
+router.get('/api/:username', (req,res) => {
     controller.getOneUser(req,res);
-}); */
+});
 
 //Metodos POST
 router.post('/api/saveuser',cors(corsOptions), (req,res) =>{
