@@ -11,15 +11,63 @@ const ebookFront = mongoose.Schema({
         type: String,
         require: true
     },
-    type:{
-        type: String,
-        require: true
-    },
     path:{
         type: String,
         require: true
     },
+    pages:{
+        type: String,
+        require: true
+    },
+    published:{
+        type: String,
+        require: true
+    },
+    language:{
+        type: String,
+        require: true
+    },
+    author:{
+        type: String,
+        require: true
+    },
+    copyReader:{
+        type: String,
+        require: true
+    },
+    illustrator:{
+        type: String,
+        require: true
+    },
+    editor:{
+        type: String,
+        require: true
+    },
+    edition:{
+        type: String,
+        require: true
+    },
+    gender:{
+        type: String,
+        require: true
+    },
+    description:{
+        type: String,
+        require: true
+    },
     btnPayPal:{
+        type: String,
+        require: true
+    },
+    legalDepo:{
+        type: String,
+        require: true
+    },
+    isbn:{
+        type: String,
+        require: true
+    },
+    price:{
         type: String,
         require: true
     }

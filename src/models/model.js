@@ -44,7 +44,14 @@ const signin = mongoose.Schema({
     birthDateYear:{
         type: String,
         require: true
+    },
+    ebookAcess:{
+        type: Array
+    },
+    ebookFrontAcess:{
+        type: Array
     }
+
     
 }, opts );
 
