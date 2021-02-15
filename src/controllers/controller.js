@@ -1,13 +1,49 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
+const nodemailer = require("nodemailer");
 
 
 const User = require('../models/model');
 const Ebook = require('../models/ebookfrontModel');
 const EbookPdf = require('../models/ebookPdf');
-const ebookPdf = require('../models/ebookPdf');
 
+
+function verifyEmail(useremail,code){
+  // Generate test SMTP service account from ethereal.email
+  // Only needed if you don't have a real mail account for testing
+  const editorialUser = process.env.EDITORIALUSER
+  const email = process.env.EDITORIALEMAIL
+  const password = process.env.EDITORIAL_PWD
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    host: "smtp.ethereal.email",
+    port: 465,
+    secure: true,
+    requireTLS: true,
+    service: 'gmail',
+    auth: {
+      user: editorialUser,
+      pass: password
+    }
+  });
+
+  // send mail with defined transport object
+  transporter.sendMail({
+    from: email, // sender address
+    to: useremail, // list of receivers
+    subject: "Codigo de verificación", // Subject line
+    text: "Tu codigo de verificación es: " + code, // plain text body
+    //html: "<b>Hello world?</b>", // html body
+  }, (err,mail) =>{
+    if(err){
+      console.log(err)
+    }else{
+      
+    }
+  });
+  
+
+}
 
 async function loginUser(req, res) {
     const { userName, password } = req.body;
@@ -89,6 +125,7 @@ async function saveUser(req, res){
       const token = jwt.sign({id: user.id }, secretKey, {
       expiresIn: expireIn
       });
+      let codeVerify = Math.random().toString(36).substr(2);
       const dataUser = {
         id: user.id,
         username: user.userName,
@@ -96,9 +133,10 @@ async function saveUser(req, res){
         country: user.country,
         email: user.email,
         accessToken: token,
-        expireIn: expireIn
+        expireIn: expireIn,
+        code : codeVerify
       }
-      
+      verifyEmail(user.email,codeVerify);
       res.json({status:'success', message: 'User add', dataUser});
     }
     
