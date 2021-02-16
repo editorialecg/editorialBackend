@@ -8,7 +8,7 @@ const Ebook = require('../models/ebookfrontModel');
 const EbookPdf = require('../models/ebookPdf');
 
 
-function verifyEmail(useremail,code){
+async function verifyEmail(useremail,code){
   // Generate test SMTP service account from ethereal.email
   // Only needed if you don't have a real mail account for testing
   const editorialUser = process.env.EDITORIALUSER
@@ -42,6 +42,71 @@ function verifyEmail(useremail,code){
     }
   });
   
+  
+
+}
+
+async function saveCodeVerify(req,res,useremail,code,dataUser){
+  User.findOne({email: useremail}, (err,user) =>{
+    if(err) {
+      res.status(404).json({err})
+    }else{
+
+      const verifed = { codeVerify: code};
+      const username = { email: user.email};
+      User.findOneAndUpdate(username,verifed,{new: true}, (err,update)=>{
+        if(err){
+          res.status(404).json({err})
+        }else{
+          const data ={
+            userName: update.userName,
+            code: code
+          }
+
+          
+          res.json({msg: 'Succes', dataUser ,data})
+        }
+      });
+      
+    }
+  });
+}
+
+function verifedEmail(req,res){
+  const userName = req.params.username
+  const code = req.body.code
+
+  User.findOne({userName: userName}, (err,user) =>{
+    if(err) {
+      res.status(404).json({err})
+    }else{
+      console.log(code)
+      console.log(user.codeVerify)
+      
+      if(user.codeVerify == code){
+        const verifed = { verifyEmail: true};
+        const username = { userName: user.userName};
+        const userU = User.findOneAndUpdate(username,verifed,{new: true}, (err,update)=>{
+          if(err){
+            res.status(404).json({err})
+          }else{
+            const data ={
+              userName: update.userName,
+              code: code,
+              verify: update.verifyEmail
+            }
+
+            
+            res.json({msg: 'Succes',data})
+          }
+        });
+      }else{
+        res.send(err)
+      }
+      
+      
+    }
+  });
 
 }
 
@@ -49,7 +114,7 @@ async function loginUser(req, res) {
     const { userName, password } = req.body;
     const user = await User.findOne({
       userName
-    }, (err,user) =>{
+      }, (err,user) =>{
         if(err) throw err;
     });
     
@@ -64,18 +129,31 @@ async function loginUser(req, res) {
         const token = jwt.sign({id: user.id }, secretKey, {
         expiresIn: expireIn
       });
-      const dataUser = {
-        id: user.id,
-        username: user.userName,
-        email: user.email,
-        accessToken: token,
-        expireIn: expireIn
+      if(user.verifyEmail){
+        const dataUser = {
+          id: user.id,
+          username: user.userName,
+          email: user.email,
+          verifyEmail: user.verifyEmail,
+          accessToken: token,
+          expireIn: expireIn
+        }
+        res.status(200).json({
+          
+          dataUser,
+          message: "create user successfully"
+        });
+      }else{
+        const dataUser = {
+          id: user.id,
+          username: user.userName,
+          email: user.email,
+          verifyEmail: user.verifyEmail,
+          accessToken: token,
+          expireIn: expireIn
+        }
+        res.json({dataUser})
       }
-      res.status(200).json({
-        
-        dataUser,
-        message: "create user successfully"
-      });
       
     } else {
       res.status(406).json({
@@ -108,6 +186,8 @@ async function saveUser(req, res){
       name: req.body.name,
       lastName: req.body.lastName,
       email: req.body.email,
+      verifyEmail: false,
+      codeVerify: '0abc',
       userName: req.body.userName,
       password: hash,
       country: req.body.country,
@@ -134,10 +214,12 @@ async function saveUser(req, res){
         email: user.email,
         accessToken: token,
         expireIn: expireIn,
-        code : codeVerify
+        code : codeVerify,
+        verifyEmail: user.verifyEmail
       }
       verifyEmail(user.email,codeVerify);
-      res.json({status:'success', message: 'User add', dataUser});
+      saveCodeVerify(req,res,user.email,codeVerify,dataUser);
+      
     }
     
     });
@@ -155,6 +237,7 @@ async function saveUser(req, res){
     }     
   }
 } 
+
 
 function getAll(req, res){
     User.find({}, (err,user) => {
@@ -396,5 +479,6 @@ module.exports = {
     getOneEbook,
     uploadPdf,
     getPdf,
-    getMyEbook
+    getMyEbook,
+    verifedEmail
 }

@@ -20,6 +20,12 @@ const signin = mongoose.Schema({
         require: true,
         unique: true
     },
+    verifyEmail:{
+        type: Boolean,
+    },
+    codeVerify:{
+        type: String
+    },
     userName:{
         type: String,
         require: true,

@@ -52,4 +52,10 @@ router.post('/api/uploadpdf', cors(corsOptions), (req,res) => {
     controller.uploadPdf(req,res);
 });
 
+
+//Metodos PUT
+router.put('/api/verifedEmail/:username', cors(corsOptions), (req,res) =>{
+    controller.verifedEmail(req,res);
+})
+
 module.exports = router;
