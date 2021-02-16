@@ -1,7 +1,7 @@
 {
   "name": "backend",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.5",
+  "description": "Backend of editorial 'Escribe como los grandes'",
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",

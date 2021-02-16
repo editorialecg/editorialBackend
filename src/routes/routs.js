@@ -2,9 +2,7 @@ const express = require('express');
 const router = express.Router();
 const cors = require('cors');
 
-
 const controller = require('../controllers/controller');
-
 
 var corsOptions = {
     origin: ['http://localhost:4200', process.env.CORS],

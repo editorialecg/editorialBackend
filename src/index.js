@@ -8,9 +8,9 @@ require('dotenv').config();
 
 
 // Setting
-app.set('port', process.env.PORT || 3000);
-app.set('views',path.join(__dirname,'views'));
-app.set('view engine', 'ejs');
+app.set('port', process.env.PORT || 3000); // Set Port
+app.set('views',path.join(__dirname,'views')); // Set path View
+app.set('view engine', 'ejs'); // Set View
 
 
 // Middleware

@@ -58,7 +58,6 @@ const signin = mongoose.Schema({
         type: Array
     }
 
-    
 }, opts );
 
 module.exports = mongoose.model('signin',signin);
