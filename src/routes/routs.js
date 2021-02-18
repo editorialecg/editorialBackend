@@ -25,6 +25,10 @@ router.get('/api/ebookId/:id', cors(corsOptions), (req,res) =>{
     controller.getOneEbook(req,res)
 });
 
+router.get('/api/viewPdf', cors(corsOptions), (req,res) =>{
+    controller.viewPdf(req,res)
+});
+
 router.get('/api/getpdf/:username/:id', cors(corsOptions), (req,res) =>{
     controller.getPdf(req,res)
 });

@@ -391,13 +391,33 @@ async function uploadPdf(req,res){
   /* This Function Save Path to pdf */
 
   // Path pdf
+  const name = req.body.name
   const path = req.body.pathPdf
 
   // Save path in db
-  ebookPdf.create({pathPdf : path}, (err,pdf) =>{
+  EbookPdf.create({
+    ebook:{
+      name: name,
+      path: path
+    }
+    }, (err,pdf) =>{
     if(err) throw err;
     res.json({pdf});
   })
+
+}
+
+async function viewPdf(req,res){
+
+  EbookPdf.find({},(err,ebook) =>{
+    if(err){
+      res.status(404).json({err})
+    }else{
+      res.send(ebook)
+    }
+
+  });
+
 
 }
 
@@ -407,43 +427,43 @@ async function getPdf(req,res){
 
   // id and userName get from params
   // id is to id pdf
-  const { id, userName} = req.params
+  const { id, username} = req.params
 
   /* const id = req.params.id
   const userName = req.params.username */
 
   // Find user with userName
   const user = await User.findOne({
-    userName: userName},(err,user) => {
+    userName: username},(err,user) => {
     if(err) throw err;
   });
-
-  // If user NOT exist send status code 404 to frontend
+  
+  // If user NOT exist send status code 404 to frontend 
   if(!user){
+    
     res.status(404).json({msg: 'User not found'}); // Send status code 404
   }else{
 
-    let eAcess = user.ebookAcess // User Ebook acess
-
-    // If Id equal to ebook acess find and send ebook
+    const eAcess = user.ebookAcess // User Ebook acess
+    
+    // If Id equal to ebook acess find and send ebook 
     if(id == eAcess){
 
       // Find ebook
-      const ebookPdf = await EbookPdf.findOne({_id: eAcess}, (err, pdf) =>{
+      const ebookPdf = await EbookPdf.find({_id: eAcess}, (err, pdf) =>{
         if(err)throw err;
       });
     
       // If ebookPdf NOT exist send status code 404 to Frontend
       if(!ebookPdf){
+        
         res.status(404).json({err: 'Ebook Not Found'}); // Send status code 404
       }else{
         
         // Path to ebookPdf send to Frontend
-        const dataPdf = {
-          pathPdf: ebookPdf.pathPdf
-        }
+        
     
-        res.status(200).json({dataPdf});
+        res.status(200).send(ebookPdf);
       }
       
     }else{
@@ -573,5 +593,6 @@ module.exports = {
     uploadPdf,
     getPdf,
     getMyEbook,
-    verifedEmail
+    verifedEmail,
+    viewPdf
 }
