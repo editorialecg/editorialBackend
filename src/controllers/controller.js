@@ -16,13 +16,18 @@ async function verifyEmail(useremail,code){
   const password = process.env.EDITORIAL_PWD;
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-    
+    host: 'smtp.gmail.com',
+    port: 465,
     secure: true,
     requireTLS: true,
     service: 'gmail',
     auth: {
       user: editorialUser,
       pass: password
+    },
+    tls: {
+        // do not fail on invalid certs
+        rejectUnauthorized: false
     }
   });
 
