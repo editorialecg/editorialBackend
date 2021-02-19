@@ -11,9 +11,9 @@ const EbookPdf = require('../models/ebookPdf'); // Model EbookPdf
 async function verifyEmail(useremail,code){
   // Generate test SMTP service account from ethereal.email
   // Only needed if you don't have a real mail account for testing
-  const editorialUser = process.env.EDITORIALUSER
-  const email = process.env.EDITORIALEMAIL
-  const password = process.env.EDITORIAL_PWD
+  const editorialUser = process.env.EDITORIALUSER;
+  const email = process.env.EDITORIALEMAIL;
+  const password = process.env.EDITORIAL_PWD;
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
     host: "smtp.ethereal.email",
