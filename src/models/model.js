@@ -52,10 +52,12 @@ const signin = mongoose.Schema({
         require: true
     },
     ebookAcess:{
-        type: Array
+        type: Array,
+        default: []
     },
     ebookFrontAcess:{
-        type: Array
+        type: Array,
+        default: []
     }
 
 }, opts );

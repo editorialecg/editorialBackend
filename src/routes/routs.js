@@ -58,6 +58,10 @@ router.post('/api/uploadpdf', cors(corsOptions), (req,res) => {
 //Metodos PUT
 router.put('/api/verifedEmail/:username', cors(corsOptions), (req,res) =>{
     controller.verifedEmail(req,res);
-})
+});
+
+router.put('/api/ebookpay/:user/:front/:pdf', cors(corsOptions), (req,res) => {
+    controller.ebookPay(req,res)
+});
 
 module.exports = router;

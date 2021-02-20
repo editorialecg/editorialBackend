@@ -17,11 +17,10 @@ async function verifyEmail(useremail,code){
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    port: 546,
-    secure: false,
+    port: 465,
+    secure: true,
     service: 'gmail',
     auth: {
-      type: 'login',
       user: editorialUser,
       pass: password
     },
@@ -42,7 +41,7 @@ async function verifyEmail(useremail,code){
     if(err){
       console.log(err)
     }else{
-      
+      console.log(mail)
     }
   }); 
 
@@ -450,29 +449,37 @@ async function getPdf(req,res){
 
     const eAcess = user.ebookAcess // User Ebook acess
     
-    // If Id equal to ebook acess find and send ebook 
-    if(id == eAcess){
+    console.log(eAcess)
+    console.log(id)
+    for (let i = 0; i <= eAcess.length; i++) {
+      const acess = eAcess[i];
+      // If Id equal to ebook acess find and send ebook 
+      if(id == acess){
 
-      // Find ebook
-      const ebookPdf = await EbookPdf.find({_id: eAcess}, (err, pdf) =>{
-        if(err)throw err;
-      });
-    
-      // If ebookPdf NOT exist send status code 404 to Frontend
-      if(!ebookPdf){
+        // Find ebook
+        const ebookPdf = await EbookPdf.find({_id: eAcess}, (err, pdf) =>{
+          if(err)throw err;
+        });
+      
+        // If ebookPdf NOT exist send status code 404 to Frontend
+        if(!ebookPdf){
+          
+          res.status(404).json({err: 'Ebook Not Found'}); // Send status code 404
+        }else{
+          
+          // Path to ebookPdf send to Frontend
+          
+      
+          res.status(200).send(ebookPdf);
+        }
         
-        res.status(404).json({err: 'Ebook Not Found'}); // Send status code 404
       }else{
-        
-        // Path to ebookPdf send to Frontend
-        
-    
-        res.status(200).send(ebookPdf);
+        console.log('Error id != eAcess')
       }
       
-    }else{
-      console.log('Error id != eAcess')
     }
+
+    
 
   }
 
@@ -585,6 +592,51 @@ async function getOneEbook(req,res){
 
 }
 
+async function ebookPay(req,res){
+  const { user, front, pdf} = req.params
+
+  console.log( user, front, pdf)
+
+  const ebookFront = await Ebook.findOne({_id: front}, (err,front) =>{
+    if(err){
+      res.status(404).json({err})
+    }
+  });
+
+  const ebookPdf = await EbookPdf.findOne({_id: pdf}, (err,pdf) =>{
+    if(err){
+      res.status(404).json({err})
+    }
+  });
+
+  User.findOne({userName: user}, (err,user) => {
+    if(err){
+      res.status(404).json({err})
+    }else{
+
+      const idFront = {
+          $push:{
+            ebookAcess: [ebookPdf._id],
+            ebookFrontAcess: [ebookFront.path]
+          }
+      }
+      const userName = {userName: user.userName}
+
+
+      User.updateOne(userName,idFront, (err,update) =>{
+        if(err)throw err;
+        
+        
+        res.json({update})
+        
+      })
+
+    }
+  });
+
+
+}
+
 // Export all module
 module.exports = {
     loginUser,
@@ -598,5 +650,6 @@ module.exports = {
     getPdf,
     getMyEbook,
     verifedEmail,
-    viewPdf
+    viewPdf,
+    ebookPay
 }
