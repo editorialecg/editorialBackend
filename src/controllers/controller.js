@@ -17,11 +17,11 @@ async function verifyEmail(useremail,code){
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    requireTLS: true,
+    port: 546,
+    secure: false,
     service: 'gmail',
     auth: {
+      type: 'login',
       user: editorialUser,
       pass: password
     },
