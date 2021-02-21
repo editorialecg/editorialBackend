@@ -27,6 +27,6 @@ app.use(require('./routes/routs'));
 
 // Server
 app.listen(app.get('port'), () => {
-    console.log(`Server run on ${process.env.API_HOST} port`, app.get('port'));
+    console.log(`Server run on port`, app.get('port'));
 });
 

@@ -10,58 +10,58 @@ var corsOptions = {
 
 // Metodos GET
 router.get('/api/users', cors(corsOptions), (req,res) => {
-    controller.getAll(req, res);
+    controller.controller.getAll(req, res);
 });
 
 router.get('/api/user/:username', cors(corsOptions), (req,res) => {
-    controller.getOneUser(req,res);
+    controller.controller.getOneUser(req,res);
 });
 
 router.get('/api/getebooks', cors(corsOptions), (req,res) => {
-    controller.getEbook(req,res);
+    controller.controller.getEbook(req,res);
 });
 
 router.get('/api/ebookId/:id', cors(corsOptions), (req,res) =>{
-    controller.getOneEbook(req,res)
+    controller.controller.getOneEbook(req,res)
 });
 
 router.get('/api/viewPdf', cors(corsOptions), (req,res) =>{
-    controller.viewPdf(req,res)
+    controller.controller.viewPdf(req,res)
 });
 
 router.get('/api/getpdf/:username/:id', cors(corsOptions), (req,res) =>{
-    controller.getPdf(req,res)
+    controller.controller.getPdf(req,res)
 });
 
 router.get('/api/getMyEbook/:username', cors(corsOptions), (req,res) =>{
-    controller.getMyEbook(req,res)
+    controller.controller.getMyEbook(req,res)
 });
 
 //Metodos POST
 router.post('/api/saveuser',cors(corsOptions), (req,res) =>{
-    controller.saveUser(req,res);
+    controller.controller.saveUser(req,res);
 });
 
 router.post('/api/loginuser', cors(corsOptions), (req,res) =>{
-    controller.loginUser(req,res);
+    controller.controller.loginUser(req,res);
 });
 
 router.post('/api/ebooks', cors(corsOptions), (req,res) =>{
-    controller.uploadEbook(req,res);
+    controller.controller.uploadEbook(req,res);
 });
 
 router.post('/api/uploadpdf', cors(corsOptions), (req,res) => {
-    controller.uploadPdf(req,res);
+    controller.controller.uploadPdf(req,res);
 });
 
 
 //Metodos PUT
 router.put('/api/verifedEmail/:username', cors(corsOptions), (req,res) =>{
-    controller.verifedEmail(req,res);
+    controller.controller.verifedEmail(req,res);
 });
 
 router.put('/api/ebookpay/:user/:front/:pdf', cors(corsOptions), (req,res) => {
-    controller.ebookPay(req,res)
+    controller.controller.ebookPay(req,res)
 });
 
 module.exports = router;
