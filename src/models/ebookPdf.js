@@ -7,16 +7,16 @@ const opts = {
   
 
 const ebookPdf = mongoose.Schema({
-    ebook:{
-        name:{
-            type: String,
-            require: true
-        },
-        path:{
-            type: [String],
-            default: []
-        }
+    
+    name:{
+        type: String,
+        require: true
     },
+    path:{
+        type: [String],
+        default: []
+    }
+    
     
 }, opts );
 

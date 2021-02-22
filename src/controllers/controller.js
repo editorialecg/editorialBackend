@@ -42,7 +42,7 @@ class Controller{
       if(err){
         console.log(err)
       }else{
-        console.log(mail)
+        
       }
     }); 
   
@@ -265,8 +265,8 @@ class Controller{
           verifyEmail: user.verifyEmail
         }
   
-        verifyEmail(user.email,codeVerify); // Send Email with code to verify
-        saveCodeVerify(req,res,user.email,codeVerify,dataUser); // Save Code to verify
+        this.verifyEmail(user.email,codeVerify); // Send Email with code to verify
+        this.saveCodeVerify(req,res,user.email,codeVerify,dataUser); // Save Code to verify
         
       }
       
@@ -379,25 +379,56 @@ class Controller{
     
   }
   
-  uploadPdf(req,res){
+  async uploadPdf(req,res){
   
     /* This Function Save Path to pdf */
   
     // Path pdf
     const name = req.body.name
-    const path = req.body.pathPdf
-  
+    const path = req.body.path
+    
+    
+
     // Save path in db
-    EbookPdf.create({
-      ebook:{
+    const ebookpdf = await EbookPdf.findOne({name: name}, (err,ebook) =>{
+      if(err) throw err;
+      
+    });
+    
+
+    if(!ebookpdf){
+      
+      EbookPdf.create({
+        
         name: name,
         path: path
-      }
+        
       }, (err,pdf) =>{
-      if(err) throw err;
-      res.json({pdf});
-    })
-  
+        if(err) throw err;
+        res.json({pdf});
+      })
+    }else{
+      const find = {
+        
+        name: name,
+        
+        
+      }
+      
+      const pathPdf = {
+        $push:{
+          
+          path: path
+          
+        }
+      }
+
+      EbookPdf.updateOne(find,pathPdf, (err,pdf) =>{
+        if(err) throw err;
+        res.json({pdf});
+      })
+    }
+    
   }
   
   viewPdf(req,res){
