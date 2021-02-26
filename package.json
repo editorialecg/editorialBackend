@@ -1,6 +1,6 @@
 {
   "name": "backend",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Backend of editorial 'Escribe como los grandes'",
   "main": "index.js",
   "scripts": {
@@ -13,12 +13,14 @@
   "dependencies": {
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
     "connect-multiparty": "^2.2.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",
     "fs-extra": "^9.1.0",
+    "helmet": "^4.4.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.11",
     "morgan": "^1.10.0",

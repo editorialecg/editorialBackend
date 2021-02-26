@@ -9,47 +9,57 @@ const opts = {
 const signin = mongoose.Schema({
     name:{
         type: String,
-        require: true
+        require: true,
+        default: ''
     },
     lastName:{
         type: String,
-        require: true
+        require: true,
+        default: ''
     },
     email:{
         type: String,
         require: true,
-        unique: true
+        
+        default: ''
     },
     verifyEmail:{
         type: Boolean,
     },
     codeVerify:{
-        type: String
+        type: String,
+        default: ''
     },
     userName:{
         type: String,
         require: true,
-        unique: true
+        
+        default: ''
     },
     password:{
         type: String,
-        require: true
+        require: true,
+        default: ''
     },
     country:{
         type: String,
-        require: true
+        require: true,
+        default: ''
     },
     birthDateDay:{
         type: String,
-        require: true
+        require: true,
+        default: ''
     },
     birthDateMonth:{
         type: String,
-        require: true
+        require: true,
+        default: ''
     },
     birthDateYear:{
         type: String,
-        require: true
+        require: true,
+        default: ''
     },
     ebookAcess:{
         type: Array,

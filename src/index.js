@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 require('dotenv').config();
-
+const compression = require('compression');
+const helmet = require('helmet')
 
 // Setting
 app.set('port', process.env.PORT || 3000); // Set Port
@@ -18,6 +19,8 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
+app.use(compression());
+app.use(helmet());
 
 // db
 const dbConnect = require('./db');

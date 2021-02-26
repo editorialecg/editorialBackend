@@ -48,6 +48,10 @@ class Controller{
   
   }
 
+  createCode(){
+    return Math.random().toString(36).substr(2);
+  }
+
   async loginUser(req, res) {
 
     /* This Function verifed if user and password equal true
@@ -250,8 +254,8 @@ class Controller{
         expiresIn: expireIn
         });
   
-        let codeVerify = Math.random().toString(36).substr(2); // Generate code to verify
-  
+        // Generate code to verify
+        let codeVerify = this.createCode()
         // Data send to frontend
         const dataUser = {
           id: user.id,
@@ -334,6 +338,143 @@ class Controller{
     }
     
   }
+
+  async getConfigUser(req,res){
+  
+    /* This Function Find user If exist send data to Frontend  */
+  
+    const username = req.params.username; // Username get from params
+  
+    // Find user 
+    const user = await User.findOne({
+        userName: username
+      }, (err,user) =>{
+      if(err) throw err;      
+    });
+    
+    // If User NOT exist send status 404 to Frontend
+    if (!user) {
+      res.status(404).json({message: 'User not found'});
+      throw Error("User not found");
+      
+    }else{
+      
+      // Data send to Frontend
+      const profileDataUser = {
+        name: user.name,
+        lastName: user.lastName,
+        email: user.email,
+        userName: user.userName,
+        
+      }
+  
+      res.status(200).json({profileDataUser, msg: 'User Profile data'});
+    }
+    
+  }
+
+  async updateUser(req,res){
+    const { name, lastName, email, userName } = req.body
+
+    const UserName = req.params.username
+
+    const username = await User.findOne({ userName: userName}, (err,user) =>{
+      if(err) throw err;
+    });
+
+    const userEmail = await User.findOne({email: email}, (err,email) =>{
+      if(err) throw err;
+    })
+
+    if (name) {
+      
+      const find = {
+        userName: UserName
+      }
+  
+      const update = {
+        name: name,
+      }
+  
+      const Uname = await User.updateOne(find,update,(err,update) =>{
+        if(err) throw err;
+        
+      });
+
+      res.json({Uname})
+      
+    }
+    
+    if(lastName){
+      const find = {
+        userName: UserName
+      }
+  
+      const update = {
+        lastName: lastName,
+      }
+  
+      const Ulastname = await User.updateOne(find,update,(err,update) =>{
+        if(err) throw err;
+        
+      });
+
+      res.json({Ulastname})
+    }
+
+    if(email == 'undefined' || email == null){
+
+    }else{
+      if(!userEmail ){
+        const find = {
+          userName: UserName
+        }
+    
+        const update = {
+          email: email,
+        }
+    
+        const Uemail = await User.updateOne(find,update,(err,update) =>{
+          if(err) throw err;
+          
+        });
+  
+        res.json({Uemail})
+        
+      }else{
+        res.status(409).send()
+      }
+    }
+
+    if(userName == 'undefined' || userName == null){
+
+    }else{
+      if(!username){
+        const find = {
+          userName: UserName
+        }
+    
+        const update = {
+          userName: userName
+        }
+    
+        await User.updateOne(find,update,(err,update) =>{
+          if(err) throw err;
+          
+        });
+        const profileDataUser = {
+          userName: userName
+        }
+    
+        res.status(200).json({profileDataUser, msg: 'User Profile data'});
+      }else{
+        res.status(408).send()
+      }
+    }
+    
+    
+
+  }
   
   uploadEbook(req,res){
   
@@ -387,7 +528,6 @@ class Controller{
     const name = req.body.name
     const path = req.body.path
     
-    
 
     // Save path in db
     const ebookpdf = await EbookPdf.findOne({name: name}, (err,ebook) =>{
@@ -399,7 +539,6 @@ class Controller{
     if(!ebookpdf){
       
       EbookPdf.create({
-        
         name: name,
         path: path
         
@@ -409,17 +548,12 @@ class Controller{
       })
     }else{
       const find = {
-        
-        name: name,
-        
-        
+        name: name
       }
       
       const pathPdf = {
         $push:{
-          
           path: path
-          
         }
       }
 
@@ -663,6 +797,93 @@ class Controller{
   
   }
   
+  async confirmPassword(req,res){
+    const password = req.body.password
+    const userName = req.params.username
+
+    const userPassword = await User.findOne({userName: userName}, (err,user) =>{
+      if(err) throw err;
+    })
+
+    if(bcrypt.compareSync(password,userPassword.password)){
+      res.json({data: userPassword.userName,msg: 'Password Match'})
+    }else{
+      res.status(401).json({msg: 'Password not match'})
+    }
+
+  }
+
+  async changePassword(req,res){
+    const userName = req.params.username
+    const password = req.body.password
+
+    const saltRounds = 10; // SaltRound to encrypt password
+    const salt = bcrypt.genSaltSync(saltRounds); // Generate Salt 
+    const hash = bcrypt.hashSync(password, salt);
+
+    const userPassword = await User.findOne({userName: userName}, (err,user) =>{
+      if(err) throw err;
+    })
+
+    const find ={
+      userName: userPassword.userName
+    }
+
+
+    const update = {
+      password: hash
+    }
+
+    User.updateOne(find,update, (err,update) =>{
+      if(err) throw err;
+      res.json({msg: 'Password Update'})
+    })
+
+  }
+
+  async confirmUser(req,res){
+    const username = req.body.username
+
+    const user = await User.findOne({userName: username}, (err,user) => {
+      if(err) throw err;
+    });
+
+    if(!user){
+      res.status(404).send()
+    }else{
+      const code = await this.createCode()
+      const email = user.email
+
+      const dataUser ={
+        id: user.id,
+        username: user.userName,
+        code: code,
+        verifyEmail: user.verifyEmail
+      }      
+
+      this.saveCodeVerify(req,res,email,code,dataUser)
+
+      this.verifyEmail(email,code)
+
+    }
+
+  }
+
+  async confirmCode(req,res){
+    const code = req.body.code
+    const username = req.params.username
+
+    const user = await User.findOne({userName: username}, (err,user) =>{
+      if(err)throw err;
+    })
+
+    if(code == user.codeVerify){
+      res.json({sucess: true})
+    }else{
+      res.status(401).send()
+    }
+
+  }
 
 }
 

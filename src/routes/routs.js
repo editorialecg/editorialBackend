@@ -5,7 +5,7 @@ const cors = require('cors');
 const controller = require('../controllers/controller');
 
 var corsOptions = {
-    origin: ['http://localhost:4200', process.env.CORS],
+    origin: [process.env.CORS],
 }
 
 // Metodos GET
@@ -37,6 +37,10 @@ router.get('/api/getMyEbook/:username', cors(corsOptions), (req,res) =>{
     controller.controller.getMyEbook(req,res)
 });
 
+router.get('/api/configuser/:username', cors(corsOptions), (req,res) => {
+    controller.controller.getConfigUser(req,res);
+});
+
 //Metodos POST
 router.post('/api/saveuser',cors(corsOptions), (req,res) =>{
     controller.controller.saveUser(req,res);
@@ -54,6 +58,17 @@ router.post('/api/uploadpdf', cors(corsOptions), (req,res) => {
     controller.controller.uploadPdf(req,res);
 });
 
+router.post('/api/confirpassword/:username', cors(corsOptions), (req,res) =>{
+    controller.controller.confirmPassword(req,res);
+});
+
+router.post('/api/confirmuser', cors(corsOptions), (req,res) => {
+    controller.controller.confirmUser(req,res)
+})
+
+router.post('/api/confirmcode/:username',cors(corsOptions), (req,res) => {
+    controller.controller.confirmCode(req,res)
+})
 
 //Metodos PUT
 router.put('/api/verifedEmail/:username', cors(corsOptions), (req,res) =>{
@@ -63,5 +78,14 @@ router.put('/api/verifedEmail/:username', cors(corsOptions), (req,res) =>{
 router.put('/api/ebookpay/:user/:front/:pdf', cors(corsOptions), (req,res) => {
     controller.controller.ebookPay(req,res)
 });
+
+router.put('/api/updateuser/:username', cors(corsOptions), (req,res) =>{
+    controller.controller.updateUser(req,res)
+})
+
+router.put('/api/chagepassword/:username', cors(corsOptions), (req,res) =>{
+    controller.controller.changePassword(req,res)
+})
+
 
 module.exports = router;
