@@ -1,0 +1,8 @@
+{
+  "verbose": true,
+  "forceExit": true,
+  "notify": true,
+  "testTimeout": 50000,
+  "testEnvironment": "node"
+
+}

@@ -2,116 +2,118 @@ const mongoose = require('mongoose');
 
 const opts = {
     // Make Mongoose use Unix time (seconds since Jan 1, 1970)
-    timestamps: { currentTime: () => Math.floor(Date.now()) }
-  };
-  
+    timestamps: { currentTime: () => Math.floor(Date.now()) },
+    
+    
+};
+
 
 const ebookFront = mongoose.Schema({
-    name:{
+    name: {
         type: String,
         require: true
     },
 
-    subTitle:{
-        type: String,
-        require: true
-    },
-    
-    path:{
+    subTitle: {
         type: String,
         require: true
     },
 
-    pages:{
+    path: {
         type: String,
         require: true
     },
 
-    published:{
-        type: String,
-        require: true
-    },
-    
-    language:{
+    pages: {
         type: String,
         require: true
     },
 
-    author:{
+    published: {
         type: String,
         require: true
     },
 
-    authorBio:{
+    language: {
         type: String,
         require: true
     },
 
-    copyReader:{
+    author: {
         type: String,
         require: true
     },
 
-    copyReaderBio:{
-        type: String,
-        require: true
-    },
-    
-    illustrator:{
+    authorBio: {
         type: String,
         require: true
     },
 
-    illustratorBio:{
+    copyReader: {
         type: String,
         require: true
     },
 
-    editor:{
+    copyReaderBio: {
         type: String,
         require: true
     },
 
-    editorBio:{
+    illustrator: {
         type: String,
         require: true
     },
 
-    edition:{
+    illustratorBio: {
         type: String,
         require: true
     },
 
-    gender:{
+    editor: {
         type: String,
         require: true
     },
 
-    description:{
+    editorBio: {
         type: String,
         require: true
     },
 
-    btnPayPal:{
+    edition: {
         type: String,
         require: true
     },
 
-    legalDepo:{
+    gender: {
         type: String,
         require: true
     },
 
-    isbn:{
+    description: {
         type: String,
         require: true
     },
 
-    price:{
+    btnPayPal: {
+        type: String,
+        require: true
+    },
+
+    legalDepo: {
+        type: String,
+        require: true
+    },
+
+    isbn: {
+        type: String,
+        require: true
+    },
+
+    price: {
         type: String,
         require: true
     }
-    
-}, opts );
 
-module.exports = mongoose.model('ebookFront',ebookFront);
+}, opts);
+
+module.exports = mongoose.model('ebookFront', ebookFront);

@@ -2,74 +2,75 @@ const mongoose = require('mongoose');
 
 const opts = {
     // Make Mongoose use Unix time (seconds since Jan 1, 1970)
-    timestamps: { currentTime: () => Math.floor(Date.now()) }
-  };
-  
+    timestamps: { currentTime: () => Math.floor(Date.now()) },
+};
+
+
 
 const signin = mongoose.Schema({
-    name:{
+    name: {
         type: String,
         require: true,
         default: ''
     },
-    lastName:{
+    lastName: {
         type: String,
         require: true,
         default: ''
     },
-    email:{
+    email: {
         type: String,
         require: true,
-        
+
         default: ''
     },
-    verifyEmail:{
+    verifyEmail: {
         type: Boolean,
     },
-    codeVerify:{
+    codeVerify: {
         type: String,
         default: ''
     },
-    userName:{
-        type: String,
-        require: true,
-        
-        default: ''
-    },
-    password:{
+    userName: {
         type: String,
         require: true,
+
         default: ''
     },
-    country:{
+    password: {
         type: String,
         require: true,
         default: ''
     },
-    birthDateDay:{
+    country: {
         type: String,
         require: true,
         default: ''
     },
-    birthDateMonth:{
+    birthDateDay: {
         type: String,
         require: true,
         default: ''
     },
-    birthDateYear:{
+    birthDateMonth: {
         type: String,
         require: true,
         default: ''
     },
-    ebookAcess:{
+    birthDateYear: {
+        type: String,
+        require: true,
+        default: ''
+    },
+    ebookAcess: {
         type: Array,
         default: []
     },
-    ebookFrontAcess:{
+    ebookFrontAcess: {
         type: Array,
         default: []
     }
 
-}, opts );
+}, opts);
 
-module.exports = mongoose.model('signin',signin);
+module.exports = mongoose.model('signin', signin);
