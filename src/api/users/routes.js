@@ -5,7 +5,7 @@ const cors = require('cors')
 const router = express.Router()
 
 const corsOptions = {
-    origin: process.env.CORS
+    origin: [process.env.CORS,process.env.CORS2]
 }
 
 // GET
