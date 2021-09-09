@@ -1,20 +1,20 @@
 import userModel from '../../models/user';
 
-export async function findOneUser(userName) {
+export async function findOneUserDao(userName) {
     return new Promise((resolve, reject) => userModel.findOne({ username: userName }, (err, data) => {
         if (err)
             return reject(err);
         resolve(data);
     }));
 }
-export async function findByEmail(email) {
+export async function findByEmailDao(email) {
     return new Promise((resolve, reject) => userModel.findOne({ email: email }, (err, data) => {
         if (err)
             return reject(err);
         resolve(data);
     }));
 }
-export async function createUser(name, lastName, email, verifyEmail, codeVerify, userName, password, country, birthDay, birthMonth, birthYear) {
+export async function createUserDao(name, lastName, email, verifyEmail, codeVerify, userName, password, country, birthDay, birthMonth, birthYear) {
     return new Promise((resolve, reject) => userModel.create({
         name: name,
         lastname: lastName,
@@ -32,38 +32,38 @@ export async function createUser(name, lastName, email, verifyEmail, codeVerify,
         resolve(data);
     }));
 }
-export async function confirmEmail(username, verifyEmail) {
+export async function confirmEmailDao(username, verifyEmail) {
     return new Promise((resolve, reject) => userModel.findOneAndUpdate({ username: username }, { verifyEmail: verifyEmail }, { new: true }, (err, data) => {
         if (err) return reject(err);
         resolve(data);
     }));
 }
-export async function changePassword(userName, password) {
+export async function changePasswordDao(userName, password) {
     return new Promise((resolve, reject) => userModel.findOneAndUpdate({ username: userName }, { password: password }, { new: true }, (err, data) => {
         if (err) return reject(err);
         resolve(data);
     }));
 }
-export async function changeName(userName, name) {
+export async function changeNameDao(userName, name) {
     return new Promise((resolve, reject) => userModel.findOneAndUpdate({ username: userName }, { name: name }, { new: true }, (err, data) => {
         if (err) return reject(err);
         resolve(data);
     }));
 }
-export async function changelastName(userName, lastName) {
+export async function changelastNameDao(userName, lastName) {
     return new Promise((resolve, reject) => userModel.findOneAndUpdate({ username: userName }, { lastname: lastName }, { new: true }, (err, data) => {
         if (err) return reject(err);
         resolve(data);
     }));
 }
-export async function changeUsername(findUsername, userName) {
+export async function changeUsernameDao(findUsername, userName) {
     return new Promise((resolve, reject) => userModel.findOneAndUpdate({ username: findUsername }, { username: userName }, { new: true }, (err, data) => {
         if (err)
             return reject(err);
         resolve(data);
     }));
 }
-export async function changeEmail(userName, email) {
+export async function changeEmailDao(userName, email) {
     return new Promise((resolve, reject) => userModel.findOneAndUpdate({ username: userName }, { email: email }, { new: true }, (err, data) => {
         if (err)
             return reject(err);
@@ -71,14 +71,14 @@ export async function changeEmail(userName, email) {
     }));
 }
 
-export async function updateUser(userName, data){
+export async function updateUserDao(userName, data){
     return new Promise((resolve, reject) => userModel.findOneAndUpdate({ username: userName }, data, { new: true }, (err, data) => {
         if (err) return reject(err);
         resolve(data);
     }));
 }
 
-export async function updateEbookFront(username, update) {
+export async function updateEbookFrontDao(username, update) {
     return new Promise((resolve, reject) => userModel.findOneAndUpdate({ username: username }, update, { new: true }, (err, data) => {
         if (err) return reject(err);
         resolve(data);

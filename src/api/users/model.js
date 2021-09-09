@@ -1,48 +1,35 @@
-const userDao = require('./DAO')
+import { findOneUserDao, findByEmailDao, createUserDao, confirmEmailDao, changePasswordDao, changeNameDao, changelastNameDao, changeEmailDao, changeUsernameDao, updateUserDao, updateEbookFrontDao } from './DAO'
 
-module.exports = {
-
-    async findOneUser(userName) {
-        return await userDao.findOneUser(userName)
-    },
-
-    async findByEmail(email) {
-        return await userDao.findByEmail(email)
-    },
-
-    async createUser(name, lastName, email, verifyEmail, codeVerify, userName, password, country, birthDay, birthMonth, birthYear) {
-        return await userDao.createUser(name, lastName, email, verifyEmail, codeVerify, userName, password, country, birthDay, birthMonth, birthYear)
-    },
-
-    async confirmEmail(username, verifyEmail) {
-        return await userDao.confirmEmail(username, verifyEmail)
-    },
-
-    async changePassword(userName, password) {
-        return await userDao.changePassword(userName, password)
-    },
-
-    async changeName(userName, name) {
-        return await userDao.changeName(userName, name)
-    },
-
-    async changelastName(userName, lastName) {
-        return await userDao.changelastName(userName, lastName)
-    },
-
-    async changeEmail(userName, email) {
-        return await userDao.changeEmail(userName, email)
-    },
-
-    async changeUsername(findUsername, userName) {
-        return await userDao.changeUsername(findUsername, userName)
-    },
-
-    async updateUser(userName, data){
-        return await userDao.updateUser(userName, data)
-    },
-
-    async updateEbookFront(username, update) {
-        return await userDao.updateEbookFront(username, update)
-    }
+export async function findOneUser(userName) {
+    return await findOneUserDao(userName)
+}
+export async function findByEmail(email) {
+    return await findByEmailDao(email)
+}
+export async function createUser(name, lastName, email, verifyEmail, codeVerify, userName, password, country, birthDay, birthMonth, birthYear) {
+    return await createUserDao(name, lastName, email, verifyEmail, codeVerify, userName, password, country, birthDay, birthMonth, birthYear)
+}
+export async function confirmEmail(username, verifyEmail) {
+    return await confirmEmailDao(username, verifyEmail)
+}
+export async function changePassword(userName, password) {
+    return await changePasswordDao(userName, password)
+}
+export async function changeName(userName, name) {
+    return await changeNameDao(userName, name)
+}
+export async function changelastName(userName, lastName) {
+    return await changelastNameDao(userName, lastName)
+}
+export async function changeEmail(userName, email) {
+    return await changeEmailDao(userName, email)
+}
+export async function changeUsername(findUsername, userName) {
+    return await changeUsernameDao(findUsername, userName)
+}
+export async function updateUser(userName, data) {
+    return await updateUserDao(userName, data)
+}
+export async function updateEbookFront(username, update) {
+    return await updateEbookFrontDao(username, update)
 }

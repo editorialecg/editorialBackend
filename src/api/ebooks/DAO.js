@@ -1,26 +1,26 @@
 import ebookFrontModel from '../../models/ebookfrontModel'
 
-export async function getAllEbook() {
+export async function getAllEbookDao() {
     return new Promise((resolve, reject) => ebookFrontModel.find({}, (err, data) => {
         if (err) return reject(err)
         resolve(data)
     }))
 }
-export async function findEbookByTitle(title) {
+export async function findEbookByTitleDao(title) {
     return new Promise((resolve, reject) => ebookFrontModel.findOne({ title: title }, (err, data) => {
         if (err) return reject(err)
         resolve(data)
     }))
 }
 
-export async function updateEbookSelled(title, totalSelled) {
+export async function updateEbookSelledDao(title, totalSelled) {
     return new Promise((resolve, reject) => ebookFrontModel.findOneAndUpdate({ title: title }, { selled: totalSelled }, { new: true }, (err, data) => {
         if (err) return reject(err)
         resolve(data)
     }))
 }
 
-export async function createEbookFront(title, subTitle, path, content, pages, published, language, author, authorBio, copyReader,
+export async function createEbookFrontDao(title, subTitle, path, content, pages, published, language, author, authorBio, copyReader,
     copyReaderBio, illustrator, illustratorBio, edition, gender, description, btnPayPal, legalDepo,
     isbn, editor, editorBio, price) {
     return new Promise((resolve, reject) => ebookFrontModel.create({
