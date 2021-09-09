@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
 const opts = {
     // Make Mongoose use Unix time (seconds since Jan 1, 1970)
@@ -8,9 +8,9 @@ const opts = {
 };
 
 
-const ebookPdf = mongoose.Schema({
+const ebookPdf = Schema({
 
-    name: {
+    title: {
         type: String,
         require: true
     },
@@ -22,4 +22,4 @@ const ebookPdf = mongoose.Schema({
 
 }, opts);
 
-module.exports = mongoose.model('ebookPdf', ebookPdf);
+export default model('ebookPdf', ebookPdf);

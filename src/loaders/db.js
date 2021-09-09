@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+import { connect } from 'mongoose';
 
 // Connect to db
-var db = mongoose.connect(`mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0.nkdgo.mongodb.net/${process.env.MONGODB_DB}?retryWrites=true&w=majority`,{
+var db = connect(`mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0.nkdgo.mongodb.net/${process.env.MONGODB_DB}?retryWrites=true&w=majority`,{
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
@@ -11,4 +11,4 @@ var db = mongoose.connect(`mongodb+srv://${process.env.MONGODB_USER}:${process.e
     (err) => console.log('DataBase Error ',err)
 )
 
-module.exports = db;
+export default db;

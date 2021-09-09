@@ -1,11 +1,14 @@
 {
   "name": "backend",
   "version": "1.1.0",
-  "description": "Backend of editorial 'Escribe como los grandes'",
+  "description": "Backend of editorial 'Escribe como los Grandes'",
   "main": "index.js",
   "scripts": {
     "start": "node ./src/bin/server",
-    "dev": "nodemon ./src/bin/server",
+    "dev": "nodemon --exec npx babel-node ./src/bin/server",
+    "prebuild": "npm version patch",
+    "build": "webpack --mode production",
+    "postbuild": "git add . && git commit -m 'Production' && git push -u origin master",
     "test": "jest --config=jest.config.json --detectOpenHandles --watchAll",
     "test-user": "jest --config=jest.config.json --detectOpenHandles --watch src/test/user.test.js",
     "test-ebook": "jest --config=jest.config.json --detectOpenHandles --watch src/test/ebook.test.js"
@@ -14,7 +17,7 @@
   "author": "Ali Solorzano @alisolorzanove",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.0.0",
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "config": "^3.3.4",
@@ -22,19 +25,33 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "express-jwt": "^6.0.0",
+    "express-graphql": "^0.12.0",
     "fs-extra": "^9.1.0",
+    "graphql": "^15.5.1",
+    "graphql-tools": "^8.1.0",
     "helmet": "^4.4.1",
     "http-errors": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
     "mongoose": "^5.11.15",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
-    "nodemailer": "^6.4.18"
+    "nodemailer": "^6.4.18",
+    "socket.io": "^4.1.3"
   },
   "devDependencies": {
+    "@babel/cli": "^7.14.5",
+    "@babel/core": "^7.14.6",
+    "@babel/node": "^7.14.7",
+    "@babel/plugin-transform-runtime": "^7.14.5",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/runtime": "^7.14.6",
+    "babel-loader": "^8.2.2",
     "jest": "^26.6.3",
     "nodemon": "^2.0.7",
-    "supertest": "^6.1.3"
+    "supertest": "^6.1.3",
+    "webpack": "^5.44.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-node-externals": "^3.0.0"
   }
 }

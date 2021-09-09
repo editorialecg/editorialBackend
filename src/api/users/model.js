@@ -38,6 +38,10 @@ module.exports = {
         return await userDao.changeUsername(findUsername, userName)
     },
 
+    async updateUser(userName, data){
+        return await userDao.updateUser(userName, data)
+    },
+
     async updateEbookFront(username, update) {
         return await userDao.updateEbookFront(username, update)
     }

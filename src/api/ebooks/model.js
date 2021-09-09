@@ -1,46 +1,21 @@
-const ebookDao = require('./DAO')
-const userModel = require('../users/model')
-const ebookfrontModel = require('../../models/ebookfrontModel')
+import { getAllEbook as _getAllEbook, updateEbookSelled as _updateEbookSelled, findEbookByTitle as _findEbookByTitle, createEbookFront as _createEbookFront } from './DAO'
 
 
-module.exports = {
-    async getAllEbook() {
-        return await ebookDao.getAllEbook()
-    },
+export async function getAllEbook() {
+    return await _getAllEbook()
+}
+export async function findEbookByTitle(title) {
+    return await _findEbookByTitle(title)
+}
 
-    async findEbookFrontById(id) {
-        return await ebookDao.findEbookFrontById(id)
-    },
+export async function updateEbookSelled(title, totalSelled){
+    return await _updateEbookSelled(title, totalSelled)
+} 
 
-    async findOneUser(userName) {
-        return await userModel.findOneUser(userName)
-    },
-
-    async findEbookPdfById(id) {
-        return await ebookDao.findEbookPdfById(id)
-    },
-
-    async updateEbookFront(username, update) {
-        return await userModel.updateEbookFront(username, update)
-    },
-
-    async findEbookPdfByName(name) {
-        return await ebookDao.findEbookPdfByName(name)
-    },
-
-    async createEbookPdf(name, path) {
-        return await ebookDao.createEbookPdf(name, path)
-    },
-
-    async updateEbookPdf(name, path) {
-        return await ebookDao.updateEbookPdf(name, path)
-    },
-
-    async createEbookFront(name, subTitle, path, pages, published, language, author, authorBio, copyReader,
+export async function createEbookFront(title, subTitle, path, content, pages, published, language, author, authorBio, copyReader,
+    copyReaderBio, illustrator, illustratorBio, edition, gender, description, btnPayPal, legalDepo,
+    isbn, editor, editorBio, price) {
+    return await _createEbookFront(title, subTitle, path, content, pages, published, language, author, authorBio, copyReader,
         copyReaderBio, illustrator, illustratorBio, edition, gender, description, btnPayPal, legalDepo,
-        isbn, editor, editorBio, price) {
-        return await ebookDao.createEbookFront(name, subTitle, path, pages, published, language, author, authorBio, copyReader,
-            copyReaderBio, illustrator, illustratorBio, edition, gender, description, btnPayPal, legalDepo,
-            isbn, editor, editorBio, price)
-    }
+        isbn, editor, editorBio, price)
 }
