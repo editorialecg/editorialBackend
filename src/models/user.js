@@ -8,17 +8,14 @@ const opts = {
 const signin = Schema({
     name: {
         type: String,
-        require: true,
         default: ''
     },
     lastname: {
         type: String,
-        require: true,
         default: ''
     },
     email: {
         type: String,
-        require: true,
         default: ''
     },
     verifyEmail: {
@@ -30,12 +27,10 @@ const signin = Schema({
     },
     username: {
         type: String,
-        require: true,
         default: ''
     },
     password: {
         type: String,
-        require: true,
         default: ''
     },
     country: {
@@ -45,17 +40,14 @@ const signin = Schema({
     },
     birthDay: {
         type: String,
-        require: true,
         default: ''
     },
     birthMonth: {
         type: String,
-        require: true,
         default: ''
     },
     birthYear: {
         type: String,
-        require: true,
         default: ''
     },
     ebookAccess: {
